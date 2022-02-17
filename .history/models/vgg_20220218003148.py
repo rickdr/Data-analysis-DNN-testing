@@ -41,6 +41,33 @@ class VGGAutoencoder(torch.nn.Module):
         x = self.decoder(x)
         return x
 
+
+class AE_Transfered_Network(torch.nn.Module):
+    def __init__(self, classifier_type, autoencoder_model, num_classes=1000):
+        super(AE_Transfered_Network, self).__init__()
+        if classifier_type != 'vgg':
+            sys.stdout.write('Dear, we only support vgg now...\n')
+
+        self.features = copy.deepcopy(autoencoder_model.encoder)
+        self.avgpool = nn.AdaptiveAvgPool2d(output_size=(3, 3))
+        self.classifier = nn.Sequential(
+            nn.Linear(in_features=4608, out_features=4096, bias=True),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.5),
+            nn.Linear(in_features=4096, out_features=4096, bias=True),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.5),
+            nn.Linear(in_features=4096, out_features=num_classes, bias=True)
+        )
+
+    def forward(self, x):
+        x = self.features(x)
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.classifier(x)
+        return x
+
+
 def load_16(pre_trained=False, frozen=False, path=None, device=None, classes=10):
     if device is None:
         device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")

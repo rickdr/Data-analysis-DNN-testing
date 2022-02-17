@@ -36,12 +36,31 @@ sys.path.insert(0, './')
 from utils import seed
 
 from data import cifar
+# from data.data_sampling import WeightedRandomSampler
+# from models import resnet
+# from models import vgg
+# from models import CNN
+# from project import utils
+# from project.attacks import attacks as import_attacks
+# from project.completeness.wasserstein import wasserstein_distance
+# from project.robustness.clever import clever_u
+# from project.attacks import noises
+
+# from utils import seed
+
+# %matplotlib widget
+# %matplotlib inline
 
 seed.init_seed()
 
 all_colors = [k for k,v in pltc.cnames.items()]
 plt.rcParams.update({'figure.max_open_warning': 0})
 
+# attack = "PGD"
+# attack = "FGSM"
+# dataset = "imagenet"
+# dataset = "cifar10"
+# dataset = "cifar100"
 for dataset in ["cifar10", "cifar100", "imagenet"]:
     for attack in ["FGSM", "PGD"]:
         data_dir = "project_data/"

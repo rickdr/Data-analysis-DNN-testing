@@ -29,7 +29,9 @@ from project.robustness import emperical, clever
 from project.data_coverage import coverage_methods
 from project.completeness import amise
 
+# models https://github.com/alecpeltekian/mmclassification/blob/15cd34bbef84b103970360c6a35fd6070445c201/docs/model_zoo.md
 seed.init_seed()
+# LSA KDE mistake https://github.com/ICECCS2020/DRtest/blob/master/coverage_criteria/surprise_coverage.py
 
 # device = torch.device('cpu')
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -67,6 +69,33 @@ elif dataset_model == "cifar100-res18":
 #     experiments = experiment_utils.load_1_cifar10(data_dir)
 else:
     exit()
+
+# import cv2
+# def saveCifarImage(array, path, file):
+#     # array is 3x32x32. cv2 needs 32x32x3
+#     array = array.cpu().detach().numpy().transpose(1,2,0)
+#     # array is RGB. cv2 needs BGR
+#     array = cv2.cvtColor(array, cv2.COLOR_RGB2BGR)
+#     # save to PNG file
+#     return cv2.imwrite(path+file+".png", array)
+
+# def check_accuracy(test_loader, model, device):
+#     num_correct = 0
+#     total = 0
+#     model.eval()
+
+#     with torch.no_grad():
+#         for data, labels in test_loader:
+#             data = data.to(device=device)
+#             labels = labels.to(device=device)
+
+#             predictions = model(data)
+#             for im in data:
+#                 saveCifarImage(im, "project_data/test/", "test")
+#             num_correct += (predictions == labels).sum()
+#             total += labels.size(0)
+
+#         print(f"Test Accuracy of the model: {float(num_correct)/float(total)*100:.2f}")
 
 for experiment in experiments:
     results = {}

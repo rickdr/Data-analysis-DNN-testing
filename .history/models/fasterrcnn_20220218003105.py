@@ -7,6 +7,10 @@ from torchvision import transforms, utils
 
 sys.path.insert(0, './')
 
+# from models.torchvision_bugfix.models.detection.rpn import AnchorGenerator
+# from models.torchvision_bugfix.models.detection.faster_rcnn import FastRCNNPredictor
+# from models.torchvision_bugfix.models.detection.mask_rcnn import MaskRCNNPredictor
+# from models.torchvision_bugfix.models.detection import FasterRCNN
 from models.torchvision_bugfix.models.detection.faster_rcnn import FasterRCNN, AnchorGenerator, mobilenet_backbone
 
 
@@ -32,6 +36,8 @@ def load_with_backbone(pre_trained=True, frozen=True, path=None, device=None, cl
     else:
         model = FasterRCNN(num_classes=num_classes, backbone=backbone,
             rpn_anchor_generator=AnchorGenerator(anchor_sizes, aspect_ratios))
+    # roi_pooler = torchvision.ops.MultiScaleRoIAlign(featmap_names=['0'], output_size=7, sampling_ratio=2)
+    # model = FasterRCNN(backbone, num_classes=80, rpn_anchor_generator=anchor_generator, box_roi_pool=roi_pooler)
 
     if device == torch.device("cuda:0"):
         print("Cuda is enabled")

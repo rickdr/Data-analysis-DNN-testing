@@ -1,5 +1,3 @@
-import logging
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -305,6 +303,11 @@ class CAE(nn.Module):
     def forward(self, x):
         output = self.decode(self.encode(x))
         return output
+
+
+import logging
+import torch.nn as nn
+import numpy as np
 
 class CIFAR10_LeNet_Autoencoder(BaseNet):
     def __init__(self):

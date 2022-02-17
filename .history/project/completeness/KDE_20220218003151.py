@@ -6,6 +6,7 @@ from scipy.stats import norm as univariate_normal
 from numpy.linalg import norm as L2
 DEFAULT_BATCH_SIZE = 20
 
+
 class KernelDensityEstimator:
     def __init__(self, kernel="multivariate_gaussian", bandwidth_estimator="silverman", univariate_bandwidth=None):
         self.n = 0
